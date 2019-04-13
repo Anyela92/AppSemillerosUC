@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Container, Header, Content, Form, Item, Picker, Label,Text, Button,Textarea , Input} from 'native-base';
-import {Modal, FlatList, ActivityIndicator, View, Alert} from 'react-native';
+import {Modal, FlatList, ActivityIndicator, View, Alert,TextInput} from 'react-native';
 
 
 var coordinador="";
@@ -17,16 +17,17 @@ export default class SolicitarIngresoScreen extends Component {
       programas:'',
       coordinadores:'',
       coordinador:'',
-      semillero: 'Cultura y dearrollo 2',
-      programa: 'Ing en sistemas',
+      semillero: '',
+      programa: '',
       modalVisible: false,
       nombreSemillero: '',
       descripcion: '',      
       isLoading: true,
-      nombreSolicitante: 'Anyela',
-      correoSolicitante: 'Anyela@uc.com',
-      comentarioSolicitante: 'Me interesa la domotica'
+      nombreSolicitante: '',
+      correoSolicitante: '',
+      comentarioSolicitante: ''
     };
+
 
   }
 
@@ -133,20 +134,7 @@ export default class SolicitarIngresoScreen extends Component {
   enviar(){
     const {nombreSolicitante,correoSolicitante,comentarioSolicitante} = this.state;
 
-    /*
-    return fetch('https://api20190324075542.azurewebsites.net/api/Solicituds?NombreIntegrante={'+nombreSolicitante+'}&Correo={'+correoSolicitante+'}&DescripcionPorqueQuiereIngresar={'+comentarioSolicitante+'}&Idintegrante={'+6+'}&IdSemolleroInvestigacion={'+18+'}&Coordinador={'+4+'}')
-    .then((response) => response.json())
-    .then((responseJson) => {
-
-        Alert.alert('success'+ responseJson);
-
-
-    })
-    .catch((error) =>{
-      console.error(error);
-    });  
-    */
-
+    Alert.alert("Tu solicitud se envió correctamente");
 
     var request = new XMLHttpRequest();
     request.onreadystatechange = (e) => {
@@ -155,63 +143,18 @@ export default class SolicitarIngresoScreen extends Component {
       }
 
       if (request.status === 200) {
-        //Alert.alert('success', request.responseText);
+        
         console.log('success', request.responseText);
       } else {
-        console.warn('error');
+        
       }
     };
-
-    request.open('GET','https://api20190324075542.azurewebsites.net/api/Solicituds?NombreIntegrante={'+nombreSolicitante+'}&Correo={'+correoSolicitante+'}&DescripcionPorqueQuiereIngresar={'+comentarioSolicitante+'}&Idintegrante={'+6+'}&IdSemolleroInvestigacion={'+18+'}&Coordinador={'+4+'}');
+ 
+    request.open('GET','https://api20190324075542.azurewebsites.net/api/Solicituds?NombreIntegrante='+nombreSolicitante+'&correo='+correoSolicitante+'&descripcion='+comentarioSolicitante+'&Idintegrante=2&IdSemillero=18&IdCoordinador=4');
     request.send();
 
-
-    /*
-    let data =  new FormData();
-    
-    data.append(" NombreIntegrante",nombreSolicitante);
-    data.append(" Correo",correoSolicitante);
-    data.append("  DescripcionPorqueQuiereIngresar",comentarioSolicitante);
-    data.append("IdIntegrante",1);
-    data.append(" IdSemolleroInvestigacion",18);
-    data.append(" Coordinador",4);
-
-
-    var request = new XMLHttpRequest();
-    request.open('POST', 'https://api20190324075542.azurewebsites.net/api/Solicituds');
-    request.send(data);
-*/
-
-
-/*
-    fetch('https://api20190324075542.azurewebsites.net/api/Solicituds', {
-        method: 'POST',
-        headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-	          Id:'',
-            NombreIntegrante: nombreSolicitante,
-            Correo: correoSolicitante,
-            DescripcionPorqueQuiereIngresar: comentarioSolicitante,
-            IdIntegrante:1.0,
-	          IdSemolleroInvestigacion:18.0,
-            Coordinador:4.0
-
-        }),
-        })  .then((response) => response.json())
-            .then((responseJson) => {
-            return responseJson;
-            })
-            .catch((error) => {
-            console.error(error);
-        });
-*/
-
-        Alert.alert("Mensaje: Solicitud Enviada al coordinador del semillero");      
-
-       
+    Alert.alert("La notificación fue enviada al coordinador");  
+      
   }
 
 
@@ -249,13 +192,36 @@ export default class SolicitarIngresoScreen extends Component {
         <Label style={{marginTop:'2%'}}>Nombre Semillero : {Object.keys(this.state.semilleros).map((item,index) => {if(this.state.semilleros[item].Id==this.state.semillero){return <Text key={index}>{this.state.semilleros[item].Nombre}</Text>}})} </Label>
 
              <Item>
-                <Input onChange={this.handleInputChange('nombreSolicitante')} placeholder="Nombre solicitante" value={this.state.nombreSolicitante} />
+
+                <TextInput
+                  style={{height: 40,width:300,marginTop:20}}
+                  onChangeText={(nombreSolicitante) => this.setState({nombreSolicitante})}
+                  value={this.state.nombreSolicitante}
+                  placeholder="Nombre solicitante"
+                />
+
              </Item>   
              <Item>
-                <Input onChange={this.handleInputChange('correoSolicitante')}  placeholder="Correo solicitante" value={this.state.correoSolicitante}  />
-             </Item>             
 
-             <Textarea style={{marginTop:'4%'}} onChange={this.handleInputChange('comentarioSolicitante')} rowSpan={5} value={this.state.comentarioSolicitante}  bordered placeholder="Comentanos, ¿Por què quieres pertenecer a este semillero? (Opcional)" />
+             <TextInput
+                  style={{height: 40,width:300,marginTop:20}}
+                  onChangeText={(correoSolicitante) => this.setState({correoSolicitante})}
+                  value={this.state.correoSolicitante}
+                  placeholder="Correo solicitante"
+                />
+            </Item> 
+
+            <Item>
+              
+            <TextInput
+                  style={{height: 40,width:300,marginTop:20, borderColor: 'gray'}}
+                  onChangeText={(comentarioSolicitante) => this.setState({comentarioSolicitante})}
+                  value={this.state.comentarioSolicitante}
+                  placeholder="Comentario (Opcional)"
+                />  
+            </Item>            
+
+
 
              <Button block style={{marginTop:'10%'}}  onPress={() => {this.enviar(); }}>
                 <Text>Enviar Solicitud</Text>
