@@ -150,7 +150,7 @@ export default class SolicitarIngresoScreen extends Component {
       }
     };
  
-    request.open('GET','https://api20190324075542.azurewebsites.net/api/Solicituds?NombreIntegrante='+nombreSolicitante+'&correo='+correoSolicitante+'&descripcion='+comentarioSolicitante+'&Idintegrante=2&IdSemillero=18&IdCoordinador=4');
+    request.open('GET','https://api20190415035024.azurewebsites.net/api/Solicituds?NombreIntegrante='+nombreSolicitante+'&correo='+correoSolicitante+'&descripcion='+comentarioSolicitante+'&Idintegrante=2&IdSemillero=18&IdCoordinador=4');
     request.send();
 
     Alert.alert("La notificación fue enviada al coordinador");  
