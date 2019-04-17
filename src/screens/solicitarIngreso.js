@@ -45,7 +45,7 @@ export default class SolicitarIngresoScreen extends Component {
 
   cargarSemilleros(){
 
-    return fetch('https://api20190324075542.azurewebsites.net/api/SemilleroInvestigacions')
+    return fetch('https://api20190415035024.azurewebsites.net/api/SemilleroInvestigacions')
     .then((response) => response.json())
     .then((responseJson) => {
 
@@ -64,7 +64,7 @@ export default class SolicitarIngresoScreen extends Component {
   }
 
   cargarProgramas(){
-    return fetch('https://api20190324075542.azurewebsites.net/api/Programas')
+    return fetch('https://api20190415035024.azurewebsites.net/api/Programas')
     .then((response) => response.json())
     .then((responseJson) => {
 
@@ -83,7 +83,7 @@ export default class SolicitarIngresoScreen extends Component {
 
 
   cargarCoordinadores(){
-    return fetch('https://api20190324075542.azurewebsites.net/api/Integrantes/')
+    return fetch('https://api20190415035024.azurewebsites.net/api/Integrantes/')
     .then((response) => response.json())
     .then((responseJson) => {
 
